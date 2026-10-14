@@ -3,40 +3,47 @@ import { INVITATION_DATA } from '../data/invitation';
 import { Sparkles, Heart } from 'lucide-react';
 
 /**
- * WOW Cinematic Loading Page:
- * - Animated golden Cupid with flapping angel wings drawing and firing a glowing heart arrow
- * - Two interlocking 3D engagement rings at the center that ignite in a brilliant golden flare
- * - Sacred Tamil blessing & glowing couple names reveal (Atchaya & Srikavin)
- * - Automatic smooth transition directly into the main invitation
+ * Grand Royal Loading Page & Ceremonial Transition
+ * 
+ * Features:
+ * - NO Cupid (completely removed)
+ * - Grand traditional Mandap Arch & glowing ceremonial Vilakku (lamps)
+ * - Dynamic 3D Interlocking Rings Animation:
+ *   * Dual rings spinning on 3D axes with metallic bevel highlights
+ *   * Convergence with radiant golden shockwave and celestial light beams
+ *   * Solitaire diamond with pulsing starburst refractions
+ * - Meaningful sacred quotes & Tamil welcoming blessings
+ * - Spectacular Grand Royal Velvet Curtain Opening & Golden Flare Iris Transition
+ *   into the main invitation!
  */
 export default function IntroAnimation({ onOpen, isOpened }) {
-  const [phase, setPhase] = useState(1);
-  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [stage, setStage] = useState(1);
+  const [isOpeningCurtain, setIsOpeningCurtain] = useState(false);
 
   useEffect(() => {
-    // Phase 1 (0ms): Rings appear and hover, Cupid prepares bow
-    // Phase 2 (700ms): Cupid shoots golden heart arrow
-    const tArrow = setTimeout(() => setPhase(2), 700);
+    // Stage 1 (0ms): Grand arch, sacred diya glow, and rings initial 3D rotation
+    // Stage 2 (800ms): Rings converge, spin, and interlock with golden light shockwave
+    const tRings = setTimeout(() => setStage(2), 800);
 
-    // Phase 3 (1500ms): Arrow impacts center rings -> Golden explosion & rings interlock
-    const tImpact = setTimeout(() => setPhase(3), 1500);
+    // Stage 3 (1800ms): Starburst radiance, "Atchaya & Srikavin" royal typography reveal
+    const tNames = setTimeout(() => setStage(3), 1800);
 
-    // Phase 4 (2300ms): Couple names & celebratory sparkle reveal
-    const tNames = setTimeout(() => setPhase(4), 2300);
+    // Stage 4 (2800ms): Sacred Tamil & English welcoming quotes unfurl
+    const tQuotes = setTimeout(() => setStage(4), 2800);
 
-    // Phase 5 (3800ms): Auto-transition smoothly into the invitation
-    const tFinish = setTimeout(() => {
-      setIsFadingOut(true);
+    // Stage 5 (4600ms): Royal Curtain Opening & Iris Light Transition directly to invitation
+    const tTransition = setTimeout(() => {
+      setIsOpeningCurtain(true);
       setTimeout(() => {
         onOpen();
-      }, 700);
-    }, 3800);
+      }, 900);
+    }, 4600);
 
     return () => {
-      clearTimeout(tArrow);
-      clearTimeout(tImpact);
+      clearTimeout(tRings);
       clearTimeout(tNames);
-      clearTimeout(tFinish);
+      clearTimeout(tQuotes);
+      clearTimeout(tTransition);
     };
   }, [onOpen]);
 
@@ -44,375 +51,439 @@ export default function IntroAnimation({ onOpen, isOpened }) {
 
   return (
     <div
-      className={`wow-intro-screen ${isFadingOut ? 'fade-out' : ''}`}
+      className={`grand-intro-viewport ${isOpeningCurtain ? 'curtain-opening' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Welcome Loading"
+      aria-label="Grand Royal Welcome"
     >
       <style>{`
-        .wow-intro-screen {
+        .grand-intro-viewport {
           position: fixed;
           inset: 0;
           z-index: 99999;
-          background: radial-gradient(circle at 50% 40%, #460d16 0%, #26060a 60%, #120204 100%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 1.5rem;
-          color: var(--color-warm-ivory);
-          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
           overflow: hidden;
-        }
-
-        .wow-intro-screen.fade-out {
-          opacity: 0;
-          transform: scale(1.05);
-          pointer-events: none;
-        }
-
-        /* Subtle Luxury Damask */
-        .intro-damask {
-          position: absolute;
-          inset: 0;
-          opacity: 0.18;
-          background-image: radial-gradient(rgba(200, 161, 106, 0.18) 1.5px, transparent 1.5px);
-          background-size: 32px 32px;
-          pointer-events: none;
-        }
-
-        /* Ambient Glow Orb behind Rings */
-        .intro-celestial-orb {
-          position: absolute;
-          top: 38%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 260px;
-          height: 260px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(231, 198, 135, 0.25) 0%, rgba(81, 16, 27, 0) 70%);
-          pointer-events: none;
-          filter: blur(20px);
-          transition: transform 0.8s ease, opacity 0.8s ease;
-        }
-
-        .wow-intro-screen[data-phase="3"] .intro-celestial-orb,
-        .wow-intro-screen[data-phase="4"] .intro-celestial-orb {
-          transform: translate(-50%, -50%) scale(1.6);
-          background: radial-gradient(circle, rgba(255, 247, 240, 0.4) 0%, rgba(200, 161, 106, 0.2) 50%, transparent 75%);
-        }
-
-        /* Cupid Animation Stage */
-        .cupid-flying-stage {
-          position: absolute;
-          top: 8%;
-          left: 12%;
-          width: 90px;
-          height: 90px;
-          transform-origin: center;
-          transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-          animation: cupidFloat 3s ease-in-out infinite alternate;
-          z-index: 10;
-        }
-
-        @media (min-width: 480px) {
-          .cupid-flying-stage {
-            top: 10%;
-            left: 20%;
-            width: 120px;
-            height: 120px;
-          }
-        }
-
-        @keyframes cupidFloat {
-          0% { transform: translateY(0) rotate(-6deg); }
-          100% { transform: translateY(-12px) rotate(4deg); }
-        }
-
-        .cupid-wing-left {
-          animation: cupidWingFlap 0.28s ease-in-out infinite alternate;
-          transform-origin: 35px 45px;
-        }
-
-        .cupid-wing-right {
-          animation: cupidWingFlap 0.28s ease-in-out infinite alternate-reverse;
-          transform-origin: 55px 45px;
-        }
-
-        @keyframes cupidWingFlap {
-          0% { transform: rotate(-15deg); }
-          100% { transform: rotate(25deg); }
-        }
-
-        /* Glowing Love Arrow flying toward center rings */
-        .cupid-arrow-projectile {
-          position: absolute;
-          top: 15%;
-          left: 22%;
-          width: 90px;
-          height: 18px;
-          opacity: 0;
-          pointer-events: none;
-          z-index: 12;
-          transform-origin: left center;
-        }
-
-        @media (min-width: 480px) {
-          .cupid-arrow-projectile {
-            top: 18%;
-            left: 28%;
-            width: 130px;
-          }
-        }
-
-        .wow-intro-screen[data-phase="2"] .cupid-arrow-projectile {
-          opacity: 1;
-          animation: shootArrow 0.85s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
-        }
-
-        @keyframes shootArrow {
-          0% {
-            transform: translate3d(0, 0, 0) rotate(32deg) scale(0.6);
-            opacity: 0;
-          }
-          30% { opacity: 1; }
-          95% { opacity: 1; }
-          100% {
-            transform: translate3d(140px, 110px, 0) rotate(32deg) scale(1.1);
-            opacity: 0;
-          }
-        }
-
-        /* Interlocking Rings Loading Stage */
-        .intro-rings-box {
-          position: relative;
-          width: 220px;
-          height: 150px;
-          margin-top: 1rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 5;
+          background: #150205;
         }
 
-        @media (min-width: 480px) {
-          .intro-rings-box {
-            width: 260px;
-            height: 170px;
-          }
-        }
-
-        .intro-ring {
+        /* Royal Velvet Curtains (Left & Right Split) */
+        .curtain-panel {
           position: absolute;
-          width: 95px;
-          height: 95px;
-          border-radius: 50%;
-          border: 7px solid #C8A16A;
-          border-top-color: #FFF7F0;
-          border-bottom-color: #9D7438;
-          box-shadow: 0 0 20px rgba(200, 161, 106, 0.45);
-          transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+          top: 0;
+          bottom: 0;
+          width: 50.5%;
+          background: radial-gradient(circle at 50% 30%, #460d16 0%, #29060b 60%, #160205 100%);
+          z-index: 2;
+          transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+          box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
         }
 
-        .intro-ring-left {
-          left: 25px;
-          transform: rotate(-35deg) scale(0.9);
+        .curtain-panel.left {
+          left: 0;
+          border-right: 1px solid rgba(200, 161, 106, 0.35);
         }
 
-        .intro-ring-right {
-          right: 25px;
-          transform: rotate(35deg) scale(0.9);
+        .curtain-panel.right {
+          right: 0;
+          border-left: 1px solid rgba(200, 161, 106, 0.35);
         }
 
-        /* Phase 3 & 4: Rings Interlock & Flare */
-        .wow-intro-screen[data-phase="3"] .intro-ring-left,
-        .wow-intro-screen[data-phase="4"] .intro-ring-left {
-          left: 45px;
-          transform: rotate(-15deg) scale(1);
-          border-color: #E7C687;
-          border-top-color: #FFF7F0;
-          box-shadow: 0 0 30px rgba(231, 198, 135, 0.7);
+        /* Grand Curtain Opening Transition */
+        .curtain-opening .curtain-panel.left {
+          transform: translateX(-100%);
         }
 
-        .wow-intro-screen[data-phase="3"] .intro-ring-right,
-        .wow-intro-screen[data-phase="4"] .intro-ring-right {
-          right: 45px;
-          transform: rotate(15deg) scale(1);
-          border-color: #E7C687;
-          border-top-color: #FFF7F0;
-          box-shadow: 0 0 30px rgba(231, 198, 135, 0.7);
+        .curtain-opening .curtain-panel.right {
+          transform: translateX(100%);
         }
 
-        /* Solitaire gem on right ring */
-        .intro-ring-gem {
-          position: absolute;
-          top: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 14px;
-          height: 14px;
-          background: #FFF7F0;
-          transform: rotate(45deg);
-          box-shadow: 0 0 15px #FFF7F0;
+        .curtain-opening .grand-center-stage {
+          transform: scale(1.1);
+          opacity: 0;
+          filter: blur(8px);
         }
 
-        /* Explosive Starburst Flare when arrow hits rings */
-        .ring-burst-flare {
+        .curtain-opening .central-iris-flash {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(3.5);
+        }
+
+        /* Central Iris Flash Burst */
+        .central-iris-flash {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) scale(0);
-          width: 120px;
-          height: 120px;
+          width: 300px;
+          height: 300px;
           border-radius: 50%;
-          background: radial-gradient(circle, #FFF7F0 15%, #E7C687 45%, transparent 70%);
+          background: radial-gradient(circle, #FFF7F0 0%, #E7C687 40%, rgba(200, 161, 106, 0.4) 65%, transparent 80%);
           opacity: 0;
+          z-index: 50;
           pointer-events: none;
-          z-index: 8;
+          transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .wow-intro-screen[data-phase="3"] .ring-burst-flare {
-          animation: burstFlare 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* Embossed Floral Velvet Fabric */
+        .velvet-damask-overlay {
+          position: absolute;
+          inset: 0;
+          opacity: 0.16;
+          background-image: 
+            radial-gradient(rgba(200, 161, 106, 0.2) 1.5px, transparent 1.5px),
+            radial-gradient(rgba(255, 247, 240, 0.1) 1px, transparent 1px);
+          background-size: 36px 36px, 72px 72px;
+          background-position: 0 0, 18px 18px;
+          pointer-events: none;
         }
 
-        @keyframes burstFlare {
-          0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-          40% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
-          100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-        }
-
-        /* Couple's Names & Titles */
-        .intro-content-container {
-          text-align: center;
-          margin-top: 1.2rem;
-          max-width: 90%;
+        /* Grand Stage Container */
+        .grand-center-stage {
+          position: relative;
           z-index: 10;
+          max-width: 680px;
+          width: 92%;
+          margin: 0 auto;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem 1rem;
+          transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .intro-subheading {
-          font-family: var(--font-elegant-serif);
-          font-style: italic;
-          font-size: 1.15rem;
-          letter-spacing: 0.12em;
-          color: var(--color-muted-rose);
+        /* Grand Temple Arch & Vilakku Motif */
+        .royal-arch-top {
+          width: 100%;
+          max-width: 460px;
+          height: auto;
           margin-bottom: 0.5rem;
+          filter: drop-shadow(0 0 14px rgba(231, 198, 135, 0.5));
+          opacity: 0;
+          transform: translateY(-16px);
+          animation: archFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .intro-names-calligraphy {
-          font-family: 'Parisienne', 'Allura', 'Great Vibes', cursive;
-          font-size: 2.6rem;
-          font-weight: 400;
-          color: var(--color-warm-ivory);
-          letter-spacing: 0.02em;
-          line-height: 1.2;
-          opacity: 0;
-          transform: scale(0.92);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 35px rgba(231, 198, 135, 0.55);
+        @keyframes archFadeIn {
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sacred Auspicious Heading */
+        .grand-auspicious-badge {
+          font-family: var(--font-tamil);
+          font-size: 0.85rem;
+          letter-spacing: 0.22em;
+          color: var(--color-light-gold);
+          margin-bottom: 0.6rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          text-shadow: 0 0 10px rgba(200, 161, 106, 0.6);
+        }
+
+        /* 3D Interlocking Rings Grand Animation */
+        .grand-rings-arena {
+          position: relative;
+          width: 220px;
+          height: 140px;
+          margin: 0.8rem auto 1rem auto;
+          perspective: 1000px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         @media (min-width: 480px) {
-          .intro-names-calligraphy {
-            font-size: 3.4rem;
+          .grand-rings-arena {
+            width: 260px;
+            height: 160px;
           }
         }
 
-        .wow-intro-screen[data-phase="3"] .intro-names-calligraphy,
-        .wow-intro-screen[data-phase="4"] .intro-names-calligraphy {
+        /* Ring Light Halo */
+        .rings-radiance-glow {
+          position: absolute;
+          inset: -20px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(231, 198, 135, 0.35) 0%, rgba(200, 161, 106, 0.1) 50%, transparent 75%);
+          filter: blur(14px);
+          animation: radianceBreathe 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes radianceBreathe {
+          0% { transform: scale(0.9); opacity: 0.5; }
+          100% { transform: scale(1.2); opacity: 0.95; }
+        }
+
+        /* 3D Animated Ring Elements */
+        .ring-3d-left {
+          position: absolute;
+          left: 20px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: 7px solid #C8A16A;
+          border-top-color: #FFF7F0;
+          border-bottom-color: #8C5F22;
+          box-shadow: 0 8px 25px rgba(18, 2, 5, 0.8), 0 0 15px rgba(200, 161, 106, 0.5);
+          transform-style: preserve-3d;
+          animation: ringSpinLeft 4s ease-in-out infinite alternate;
+          transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ring-3d-right {
+          position: absolute;
+          right: 20px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: 7px solid #E7C687;
+          border-top-color: #FFFDF8;
+          border-bottom-color: #9D7438;
+          box-shadow: 0 8px 25px rgba(18, 2, 5, 0.8), 0 0 18px rgba(231, 198, 135, 0.6);
+          transform-style: preserve-3d;
+          animation: ringSpinRight 4s ease-in-out infinite alternate;
+          transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes ringSpinLeft {
+          0% { transform: rotateY(-35deg) rotateX(15deg) rotateZ(-20deg); }
+          100% { transform: rotateY(-10deg) rotateX(25deg) rotateZ(-10deg); }
+        }
+
+        @keyframes ringSpinRight {
+          0% { transform: rotateY(35deg) rotateX(15deg) rotateZ(20deg); }
+          100% { transform: rotateY(10deg) rotateX(25deg) rotateZ(10deg); }
+        }
+
+        /* Stage 2+ Interlocking Convergence */
+        .grand-intro-viewport[data-stage="2"] .ring-3d-left,
+        .grand-intro-viewport[data-stage="3"] .ring-3d-left,
+        .grand-intro-viewport[data-stage="4"] .ring-3d-left {
+          left: 45px;
+          border-color: #E7C687;
+          border-top-color: #FFF7F0;
+          box-shadow: 0 0 30px rgba(231, 198, 135, 0.8);
+        }
+
+        .grand-intro-viewport[data-stage="2"] .ring-3d-right,
+        .grand-intro-viewport[data-stage="3"] .ring-3d-right,
+        .grand-intro-viewport[data-stage="4"] .ring-3d-right {
+          right: 45px;
+          border-color: #E7C687;
+          border-top-color: #FFF7F0;
+          box-shadow: 0 0 30px rgba(231, 198, 135, 0.8);
+        }
+
+        /* Solitaire Gem on Crown */
+        .ring-crown-gem {
+          position: absolute;
+          top: -12px;
+          left: 50%;
+          transform: translateX(-50%) rotate(45deg);
+          width: 16px;
+          height: 16px;
+          background: #FFFFFF;
+          box-shadow: 0 0 15px #FFF7F0, 0 0 25px #E7C687;
+        }
+
+        /* Golden Sparkle Flare Apex */
+        .rings-sparkle-blast {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0);
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          background: radial-gradient(circle, #FFFDF8 20%, #E7C687 45%, transparent 70%);
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .grand-intro-viewport[data-stage="2"] .rings-sparkle-blast,
+        .grand-intro-viewport[data-stage="3"] .rings-sparkle-blast,
+        .grand-intro-viewport[data-stage="4"] .rings-sparkle-blast {
+          animation: shockwaveFlare 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes shockwaveFlare {
+          0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+          40% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+          100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+        }
+
+        /* Couple Names Typography */
+        .grand-names-wrapper {
+          margin: 0.8rem 0;
+          opacity: 0;
+          transform: scale(0.92);
+          transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .grand-intro-viewport[data-stage="3"] .grand-names-wrapper,
+        .grand-intro-viewport[data-stage="4"] .grand-names-wrapper {
           opacity: 1;
           transform: scale(1);
         }
 
-        .intro-ampersand-sign {
+        .grand-couple-calligraphy {
+          font-family: 'Parisienne', 'Allura', 'Great Vibes', cursive;
+          font-size: clamp(2.4rem, 8vw, 3.8rem);
+          font-weight: 400;
+          color: var(--color-warm-ivory);
+          letter-spacing: 0.02em;
+          line-height: 1.15;
+          display: inline-block;
+          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 30px rgba(231, 198, 135, 0.55);
+        }
+
+        .grand-ampersand {
           font-family: 'Cinzel Decorative', cursive;
-          font-size: 2rem;
+          font-size: clamp(2rem, 6vw, 2.8rem);
           color: var(--color-light-gold);
           margin: 0 0.4rem;
           display: inline-block;
+          text-shadow: 0 0 15px rgba(200, 161, 106, 0.7);
         }
 
-        .intro-status-pulse {
+        /* Meaningful Welcoming Quotes */
+        .grand-quotes-block {
+          max-width: 540px;
+          margin-top: 0.5rem;
+          opacity: 0;
+          transform: translateY(14px);
+          transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .grand-intro-viewport[data-stage="4"] .grand-quotes-block {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .quote-tamil-line {
+          font-family: var(--font-tamil);
+          font-size: 0.88rem;
+          line-height: 1.6;
+          color: var(--color-light-gold);
+          margin-bottom: 0.4rem;
+          letter-spacing: 0.04em;
+        }
+
+        .quote-english-line {
+          font-family: var(--font-elegant-serif);
+          font-style: italic;
+          font-size: 1.1rem;
+          line-height: 1.45;
+          color: rgba(255, 247, 240, 0.9);
+          letter-spacing: 0.05em;
+        }
+
+        .grand-ceremonial-tag {
+          font-family: var(--font-serif-heading);
+          font-size: 0.76rem;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: var(--color-light-gold);
+          margin-top: 1.2rem;
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          margin-top: 1.5rem;
-          font-family: var(--font-clean-body);
-          font-size: 0.76rem;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--color-light-gold);
-          animation: pulseGlow 1.8s ease-in-out infinite;
+          animation: pulseGlow 2s ease-in-out infinite;
         }
       `}</style>
 
-      <div className="intro-damask" />
-      <div className="intro-celestial-orb" />
-
-      {/* 1. Animated Golden Flying Cupid */}
-      <div className="cupid-flying-stage">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
-          <defs>
-            <linearGradient id="cupidGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#FFF4DE" />
-              <stop offset="50%" stopColor="#E7C687" />
-              <stop offset="100%" stopColor="#9D7438" />
-            </linearGradient>
-          </defs>
-          {/* Left Angel Wing */}
-          <g className="cupid-wing-left">
-            <path d="M42 46 C 30 20, 10 25, 12 45 C 14 55, 30 52, 42 46 Z" fill="url(#cupidGold)" opacity="0.85" />
-            <path d="M40 48 C 25 35, 16 48, 26 56 Z" fill="#FFF7F0" opacity="0.4" />
-          </g>
-          {/* Right Angel Wing */}
-          <g className="cupid-wing-right">
-            <path d="M52 46 C 64 20, 84 25, 82 45 C 80 55, 64 52, 52 46 Z" fill="url(#cupidGold)" opacity="0.85" />
-            <path d="M54 48 C 69 35, 78 48, 68 56 Z" fill="#FFF7F0" opacity="0.4" />
-          </g>
-          {/* Cupid Silhouette */}
-          <circle cx="47" cy="40" r="10" fill="url(#cupidGold)" />
-          {/* Curly hair & halo */}
-          <ellipse cx="47" cy="27" rx="11" ry="3" stroke="#FFF7F0" strokeWidth="1.5" />
-          <path d="M45 49 C 40 60, 42 74, 52 74 C 58 74, 60 62, 53 49 Z" fill="url(#cupidGold)" />
-          {/* Golden Bow in hand */}
-          <path d="M58 35 Q 70 48 58 65" stroke="#FFF7F0" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          <line x1="58" y1="35" x2="58" y2="65" stroke="#E7C687" strokeWidth="0.8" />
-        </svg>
+      {/* Royal Curtain Panels for Grand Opening Reveal */}
+      <div className="curtain-panel left">
+        <div className="velvet-damask-overlay" />
+      </div>
+      <div className="curtain-panel right">
+        <div className="velvet-damask-overlay" />
       </div>
 
-      {/* 2. Golden Love Arrow flying towards the rings */}
-      <div className="cupid-arrow-projectile">
-        <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 8px #FFF7F0)' }}>
-          <line x1="0" y1="10" x2="80" y2="10" stroke="#FFF7F0" strokeWidth="2.5" />
-          {/* Heart Tip */}
-          <path d="M80 10 L88 3 C92 0, 98 4, 98 9 C98 14, 88 17, 80 10 Z" fill="#E7C687" />
-          <path d="M80 10 L88 17 C92 20, 98 16, 98 11 C98 6, 88 3, 80 10 Z" fill="#E7C687" />
-          {/* Feather tail */}
-          <path d="M0 6 L12 10 L0 14" stroke="#E7C687" strokeWidth="2" />
-        </svg>
-      </div>
+      {/* Central Iris Light Flash */}
+      <div className="central-iris-flash" />
 
-      {/* 3. Interlocking Rings Stage */}
-      <div className="intro-rings-box">
-        <div className="intro-ring intro-ring-left" />
-        <div className="intro-ring intro-ring-right">
-          <div className="intro-ring-gem" />
+      {/* Grand Center Stage */}
+      <div className="grand-center-stage">
+        {/* Royal Mandap Temple Arch Motif with Vilakku (Sacred Lamps) */}
+        <div className="royal-arch-top">
+          <svg viewBox="0 0 460 70" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+            {/* Top Ornamental Toran Garland & Mandap Arch */}
+            <path
+              d="M10 60 Q 115 15 230 15 Q 345 15 450 60"
+              stroke="#C8A16A"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path
+              d="M25 60 Q 120 25 230 25 Q 340 25 435 60"
+              stroke="#FFF7F0"
+              strokeWidth="0.8"
+              strokeDasharray="4 4"
+              fill="none"
+            />
+            {/* Hanging Golden Kalasam / Bell Droplets */}
+            <circle cx="80" cy="46" r="3" fill="#E7C687" />
+            <circle cx="150" cy="28" r="3.5" fill="#E7C687" />
+            <circle cx="230" cy="15" r="5" fill="#FFF7F0" />
+            <circle cx="310" cy="28" r="3.5" fill="#E7C687" />
+            <circle cx="380" cy="46" r="3" fill="#E7C687" />
+            {/* Sacred Vilakku (Traditional Lamp Flames) on sides */}
+            <path d="M40 55 Q 40 45 44 42 Q 48 45 48 55 Z" fill="#FFA500" />
+            <circle cx="44" cy="48" r="1.5" fill="#FFF7F0" />
+            <path d="M416 55 Q 416 45 420 42 Q 424 45 424 55 Z" fill="#FFA500" />
+            <circle cx="420" cy="48" r="1.5" fill="#FFF7F0" />
+          </svg>
         </div>
-        <div className="ring-burst-flare" />
-      </div>
 
-      {/* 4. Text Reveal Container */}
-      <div className="intro-content-container">
-        <div className="intro-subheading">A Celebration of Love</div>
-        <h1 className="intro-names-calligraphy">
-          <span>{INVITATION_DATA.bride.name}</span>
-          <span className="intro-ampersand-sign">&</span>
-          <span>{INVITATION_DATA.groom.name}</span>
-        </h1>
+        {/* Sacred Tamil Welcome Title */}
+        <div className="grand-auspicious-badge">
+          <Sparkles size={13} />
+          <span>மங்கலப் பெருவிழா அழைப்பிதழ்</span>
+          <Sparkles size={13} />
+        </div>
 
-        <div className="intro-status-pulse">
-          <Sparkles size={14} />
-          <span>Opening Sacred Invitation</span>
-          <Sparkles size={14} />
+        {/* 3D Interlocking Rings Grand Animation */}
+        <div className="grand-rings-arena">
+          <div className="rings-radiance-glow" />
+          <div className="rings-sparkle-blast" />
+
+          {/* Left Ring (Groom's Antique Gold Band) */}
+          <div className="ring-3d-left" />
+
+          {/* Right Ring (Bride's Solitaire Diamond Ring) */}
+          <div className="ring-3d-right">
+            <div className="ring-crown-gem" />
+          </div>
+        </div>
+
+        {/* Couple's Names in Parisienne Luxury Script */}
+        <div className="grand-names-wrapper">
+          <h1 className="grand-couple-calligraphy">
+            <span>{INVITATION_DATA.bride.name}</span>
+            <span className="grand-ampersand">&</span>
+            <span>{INVITATION_DATA.groom.name}</span>
+          </h1>
+        </div>
+
+        {/* Meaningful Welcoming Quotes */}
+        <div className="grand-quotes-block">
+          <div className="quote-tamil-line">
+            "இரு மனங்கள் இணையும் மங்கலத் தருணம் • உங்களின் வருகை எங்கள் பெருமகிழ்ச்சி"
+          </div>
+          <div className="quote-english-line">
+            "Two hearts unite in an eternal promise of love and togetherness."
+          </div>
+
+          <div className="grand-ceremonial-tag">
+            <Sparkles size={14} />
+            <span>Opening The Sacred Invitation</span>
+            <Sparkles size={14} />
+          </div>
         </div>
       </div>
     </div>
