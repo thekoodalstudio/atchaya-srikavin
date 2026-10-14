@@ -8,10 +8,9 @@
 
 export const INVITATION_DATA = {
   // Couple Details
-  // Exact spelling from client prompt and reference artwork
   bride: {
-    name: "Aathaya",
-    altSpelling: "Atchaya", // As stylized in reference calligraphy
+    name: "Atchaya",
+    altSpelling: "Aathaya",
     role: "Bride"
   },
   groom: {

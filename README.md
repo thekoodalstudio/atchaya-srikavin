@@ -1,4 +1,4 @@
-# Aathaya & Srikavin — Premium Interactive Engagement E-Invitation
+# Atchaya & Srikavin — Premium Interactive Engagement E-Invitation
 ### Designed and Developed by **The Koodal Studio**
 
 A handcrafted, animated Tamil Hindu engagement invitation website built with React and Vite.
@@ -7,7 +7,7 @@ A handcrafted, animated Tamil Hindu engagement invitation website built with Rea
 
 ## 💍 Event Details
 - **Occasion:** Engagement Ceremony (நிச்சயதார்த்த நன்னாளிதழ்)
-- **Bride:** Aathaya
+- **Bride:** Atchaya
 - **Groom:** Srikavin
 - **Date:** Sunday, October 25
 - **Time:** 10:00 AM onwards
@@ -22,7 +22,7 @@ A handcrafted, animated Tamil Hindu engagement invitation website built with Rea
    - Deep burgundy textured background with animated ivory corner outlines.
    - Drifting gold particles and delicate flower petals.
    - Elegant center ornamental drawing line.
-   - Typography reveal of **"Aathaya & Srikavin"**.
+   - Typography reveal of **"Atchaya & Srikavin"**.
    - "Open Invitation" call-to-action button and graceful "Skip Intro" option.
 
 2. **Animated Floral Atmosphere**
@@ -41,7 +41,7 @@ A handcrafted, animated Tamil Hindu engagement invitation website built with Rea
    - **Scene 2 (The Meeting):** Facing each other, upper bodies turn slightly inward.
    - **Scene 3 (Joining Hands):** Articulated SVG arms rotate and hands join naturally in the center.
    - **Scene 4 (Ring Ceremony):** Golden halo glows as an engagement ring settles above their joined hands.
-   - **Scene 5 (Celebration):** Golden confetti and rose petal burst, revealing **"Aathaya ♥ Srikavin"** and *"Together begins a beautiful forever."*
+   - **Scene 5 (Celebration):** Golden confetti and rose petal burst, revealing **"Atchaya ♥ Srikavin"** and *"Together begins a beautiful forever."*
    - **Scene 6 (Final Pose):** Elegant harmonious pose with an interactive **"Replay Love Story"** button.
 
 5. **Auspicious Date & Time Section**
@@ -121,11 +121,12 @@ npm run preview
 ## ☁️ Vercel Deployment Instructions
 
 1. Go to [Vercel](https://vercel.com) and click **"Add New Project"**.
-2. Select your GitHub repository: `thekoodalstudio/aathaya-srikavin-engagement`.
+2. Select your GitHub repository: `thekoodalstudio/atchaya-srikavin`.
 3. Configure Project Settings:
+   - **Project Name / Link Name:** `atchaya-srikavin`
    - **Framework Preset:** `Vite`
    - **Root Directory:** `./`
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
 4. Click **Deploy**.
-5. Custom Domain / Project Name: Set project domain / name to **`aathaya-srikavin`** or **`Aathaya & Srikavin`**.
+5. Custom Domain / Project Name: Set project domain / name to **`atchaya-srikavin`**.

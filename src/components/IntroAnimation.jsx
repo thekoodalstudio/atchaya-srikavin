@@ -10,7 +10,7 @@ import { Heart, Sparkles, ChevronRight } from 'lucide-react';
  * 3. Gold particles drift
  * 4. Center ornamental gold line draws
  * 5. "A Celebration of Love" fade-in
- * 6. "Aathaya & Srikavin" typography reveal
+ * 6. "Atchaya & Srikavin" typography reveal
  * 7. "Open Invitation" call-to-action button
  * 8. Graceful "Skip Intro" option
  */

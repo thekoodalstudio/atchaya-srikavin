@@ -1,8 +1,8 @@
 {
-  "name": "aathaya-srikavin-engagement",
+  "name": "atchaya-srikavin",
   "private": true,
   "version": "1.0.0",
-  "description": "Premium Interactive Tamil Hindu Engagement E-Invitation for Aathaya & Srikavin | The Koodal Studio",
+  "description": "Premium Interactive Tamil Hindu Engagement E-Invitation for Atchaya & Srikavin | The Koodal Studio",
   "type": "module",
   "scripts": {
     "dev": "vite",

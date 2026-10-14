@@ -12,7 +12,7 @@ import '../styles/couple.css';
  * Scene 2: The Meeting (Facing each other, slight torso turn, arms moving forward)
  * Scene 3: Joining Hands (Arms align and hands join gracefully in the center)
  * Scene 4: Ring Ceremony (Golden halo and gold ring settles above/between joined hands)
- * Scene 5: Celebration (Confetti & rose sparkle burst, "Aathaya ♥ Srikavin", "Together begins a beautiful forever")
+ * Scene 5: Celebration (Confetti & rose sparkle burst, "Atchaya ♥ Srikavin", "Together begins a beautiful forever")
  * Scene 6: Final Pose (Couple in harmonious union, subtle sway, Replay button active)
  */
 export default function CoupleAnimation({ autoPlay = true }) {
@@ -157,7 +157,7 @@ export default function CoupleAnimation({ autoPlay = true }) {
           <MaleGroomSvg />
         </div>
 
-        {/* Female Character (Bride: Aathaya) */}
+        {/* Female Character (Bride: Atchaya) */}
         <div className="character-figure female-character">
           <FemaleBrideSvg />
         </div>
