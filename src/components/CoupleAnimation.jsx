@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { INVITATION_DATA } from '../data/invitation';
-import { RotateCcw, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import '../styles/couple.css';
 
 /**
  * Signature Tamil Hindu Couple Animation
  * 
- * Scroll-Triggered:
- * Uses IntersectionObserver so the animation starts ONLY when the visitor
- * scrolls down to this specific section!
+ * Looping & Responsive:
+ * - Automatically loops through the romantic sequence smoothly
+ * - Replay button removed as requested
+ * - Couple names scaled down with fluid clamp typography so they never crop on mobile!
  */
 export default function CoupleAnimation() {
   const [scene, setScene] = useState(1);
-  const [hasTriggered, setHasTriggered] = useState(false);
-  const [isReplaying, setIsReplaying] = useState(false);
   const stageRef = useRef(null);
+  const loopTimeoutRef = useRef(null);
   const timelineRef = useRef([]);
 
   const runTimeline = () => {
@@ -45,59 +45,41 @@ export default function CoupleAnimation() {
       triggerCelebrationConfetti();
     }, 6800);
 
-    // Scene 6: Final Pose & Settle (after 8.2s)
+    // Scene 6: Final Pose (after 8.2s)
     const t6 = setTimeout(() => {
       setScene(6);
-      setIsReplaying(false);
     }, 8200);
 
-    timelineRef.current = [t2, t3, t4, t5, t6];
+    // Loop restart after holding pose (after 13.5s total)
+    const tLoop = setTimeout(() => {
+      runTimeline();
+    }, 13500);
+
+    timelineRef.current = [t2, t3, t4, t5, t6, tLoop];
   };
 
-  // Scroll trigger via IntersectionObserver
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting && !hasTriggered) {
-          setHasTriggered(true);
-          runTimeline();
-        }
-      },
-      {
-        threshold: 0.35
-      }
-    );
-
-    const currentElem = stageRef.current;
-    if (currentElem) {
-      observer.observe(currentElem);
-    }
+    runTimeline();
 
     return () => {
-      if (currentElem) observer.unobserve(currentElem);
       timelineRef.current.forEach(clearTimeout);
+      if (loopTimeoutRef.current) clearTimeout(loopTimeoutRef.current);
     };
-  }, [hasTriggered]);
+  }, []);
 
   const triggerCelebrationConfetti = () => {
     try {
       confetti({
-        particleCount: 50,
-        spread: 65,
-        origin: { y: 0.62 },
+        particleCount: 35,
+        spread: 55,
+        origin: { y: 0.65 },
         colors: ['#E7C687', '#C8A16A', '#FFF7F0', '#D9A0A0', '#871727'],
         shapes: ['circle'],
-        ticks: 220,
-        gravity: 0.8,
-        scalar: 0.85
+        ticks: 180,
+        gravity: 0.85,
+        scalar: 0.8
       });
     } catch {}
-  };
-
-  const handleReplay = () => {
-    setIsReplaying(true);
-    runTimeline();
   };
 
   const getStepLabel = () => {
@@ -175,7 +157,7 @@ export default function CoupleAnimation() {
         </div>
       </div>
 
-      {/* Celebration Info & Revealed Names */}
+      {/* Celebration Info & Revealed Names (Sized & Fluid on Mobile) */}
       <div className="couple-celebration-info">
         <h2 className="couple-celebration-names">
           <span>{INVITATION_DATA.bride.name}</span>
@@ -186,18 +168,6 @@ export default function CoupleAnimation() {
           "{INVITATION_DATA.quotes.together}"
         </p>
       </div>
-
-      {/* Replay Button */}
-      <button
-        type="button"
-        className="btn-gold-secondary couple-replay-btn"
-        onClick={handleReplay}
-        disabled={isReplaying}
-        aria-label="Replay Couple Animation"
-      >
-        <RotateCcw size={15} className={isReplaying ? 'anim-spin' : ''} />
-        <span>Replay Love Story</span>
-      </button>
     </section>
   );
 }

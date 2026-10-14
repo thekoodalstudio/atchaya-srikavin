@@ -6,9 +6,9 @@ import { Sparkles } from 'lucide-react';
 /**
  * Main Engagement Invitation Card
  * Features:
- * - Ultra-stylish script typography for Atchaya & Srikavin
- * - Animated twinkling sparkle effect and heartbeat glow around the names
- * - "Engagement Ceremony", Date, Time, and Venue
+ * - Perfectly sized, mobile-responsive couple names (no cropping on mobile!)
+ * - Ultra-stylish luxury font (Parisienne / Allura)
+ * - Twinkling star sparkles and gentle heartbeat pulsing glow
  */
 export default function MainInvitationCard() {
   const { bride, groom, occasionLead, occasion, date, venue } = INVITATION_DATA;
@@ -25,7 +25,7 @@ export default function MainInvitationCard() {
           border: 1px solid rgba(200, 161, 106, 0.45);
           border-radius: 28px;
           box-shadow: 0 25px 60px rgba(10, 1, 3, 0.85), 0 0 1px 1px rgba(231, 198, 135, 0.25) inset;
-          padding: 2.8rem 1.4rem;
+          padding: 2.4rem 1rem;
           text-align: center;
           display: flex;
           flex-direction: column;
@@ -36,13 +36,13 @@ export default function MainInvitationCard() {
 
         @media (min-width: 640px) {
           .main-invitation-hero-card {
-            padding: 3.8rem 2.5rem;
+            padding: 3.5rem 2.5rem;
           }
         }
 
         .card-inner-frame {
           position: absolute;
-          inset: 12px;
+          inset: 10px;
           border: 1px solid rgba(200, 161, 106, 0.22);
           border-radius: 20px;
           pointer-events: none;
@@ -50,47 +50,47 @@ export default function MainInvitationCard() {
 
         .card-corner-dot {
           position: absolute;
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           background: #E7C687;
           border-radius: 50%;
           box-shadow: 0 0 6px #FFF7F0;
         }
-        .dot-tl { top: -3px; left: -3px; }
-        .dot-tr { top: -3px; right: -3px; }
-        .dot-bl { bottom: -3px; left: -3px; }
-        .dot-br { bottom: -3px; right: -3px; }
+        .dot-tl { top: -2.5px; left: -2.5px; }
+        .dot-tr { top: -2.5px; right: -2.5px; }
+        .dot-bl { bottom: -2.5px; left: -2.5px; }
+        .dot-br { bottom: -2.5px; right: -2.5px; }
 
         .invitation-lead {
           font-family: var(--font-clean-body);
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           letter-spacing: 0.16em;
           color: rgba(255, 247, 240, 0.85);
           text-transform: none;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.4rem;
           font-weight: 300;
         }
 
         @media (min-width: 480px) {
           .invitation-lead {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
           }
         }
 
         .invitation-title {
           font-family: var(--font-serif-heading);
-          font-size: 1.95rem;
+          font-size: 1.75rem;
           font-weight: 600;
           color: var(--color-warm-ivory);
           letter-spacing: 0.05em;
           line-height: 1.25;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.4rem;
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
         }
 
         @media (min-width: 480px) {
           .invitation-title {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
           }
         }
 
@@ -99,85 +99,71 @@ export default function MainInvitationCard() {
           font-size: 0.85rem;
           letter-spacing: 0.15em;
           color: var(--color-light-gold);
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.6rem;
           opacity: 0.9;
         }
 
-        /* Couple Names Calligraphy with Heartbeat & Twinkling Animation */
+        /* Couple Names Container: Perfectly Sized & Responsive */
         .couple-names-hero-container {
           position: relative;
-          margin: 0.8rem 0 1.4rem 0;
-          line-height: 1.15;
-          padding: 0.5rem 1rem;
+          width: 100%;
+          max-width: 100%;
+          margin: 0.6rem 0 1.2rem 0;
+          padding: 0.4rem 0.5rem;
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           justify-content: center;
+          gap: 0.25rem 0.6rem;
           animation: nameHeartbeat 2.8s ease-in-out infinite;
         }
 
         @keyframes nameHeartbeat {
           0%, 100% {
             transform: scale(1);
-            filter: drop-shadow(0 0 12px rgba(200, 161, 106, 0.35));
+            filter: drop-shadow(0 0 10px rgba(200, 161, 106, 0.3));
           }
           14% {
-            transform: scale(1.035);
-            filter: drop-shadow(0 0 25px rgba(231, 198, 135, 0.8)) drop-shadow(0 0 45px rgba(255, 247, 240, 0.5));
+            transform: scale(1.025);
+            filter: drop-shadow(0 0 20px rgba(231, 198, 135, 0.75)) drop-shadow(0 0 35px rgba(255, 247, 240, 0.4));
           }
           28% {
             transform: scale(1);
-            filter: drop-shadow(0 0 12px rgba(200, 161, 106, 0.35));
+            filter: drop-shadow(0 0 10px rgba(200, 161, 106, 0.3));
           }
           42% {
-            transform: scale(1.025);
-            filter: drop-shadow(0 0 20px rgba(231, 198, 135, 0.65));
+            transform: scale(1.018);
+            filter: drop-shadow(0 0 16px rgba(231, 198, 135, 0.6));
           }
           56% {
             transform: scale(1);
-            filter: drop-shadow(0 0 12px rgba(200, 161, 106, 0.35));
+            filter: drop-shadow(0 0 10px rgba(200, 161, 106, 0.3));
           }
         }
 
+        /* Fluid Typography: Never cropped on mobile */
         .couple-name-calligraphy {
-          font-family: 'Pinyon Script', 'Alex Brush', cursive;
-          font-size: 3.8rem;
+          font-family: 'Parisienne', 'Allura', 'Great Vibes', cursive;
+          font-size: clamp(2.1rem, 7.5vw, 3.8rem);
           font-weight: 400;
           color: var(--color-warm-ivory);
           letter-spacing: 0.02em;
+          line-height: 1.15;
           display: inline-block;
-          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 247, 240, 0.4);
-          position: relative;
-        }
-
-        @media (min-width: 480px) {
-          .couple-name-calligraphy {
-            font-size: 4.8rem;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .couple-name-calligraphy {
-            font-size: 5.6rem;
-          }
+          white-space: nowrap;
+          text-shadow: 0 3px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 247, 240, 0.35);
         }
 
         .couple-ampersand {
           font-family: 'Cinzel Decorative', cursive;
-          font-size: 2.8rem;
+          font-size: clamp(1.8rem, 5.5vw, 2.8rem);
           color: var(--color-light-gold);
-          margin: 0 0.5rem;
           display: inline-block;
           vertical-align: middle;
-          text-shadow: 0 0 15px rgba(200, 161, 106, 0.7);
+          text-shadow: 0 0 12px rgba(200, 161, 106, 0.7);
         }
 
-        @media (min-width: 480px) {
-          .couple-ampersand {
-            font-size: 3.6rem;
-          }
-        }
-
-        /* Twinkling Stars around the couple names */
+        /* Twinkling Star Accents */
         .name-twinkle-star {
           position: absolute;
           color: #FFE5B4;
@@ -186,22 +172,22 @@ export default function MainInvitationCard() {
         }
 
         .star-top-left {
-          top: -6px;
-          left: 12px;
-          animation-delay: 0.3s;
+          top: -4px;
+          left: 10px;
+          animation-delay: 0.2s;
         }
 
         .star-bottom-right {
           bottom: -4px;
-          right: 14px;
-          animation-delay: 1.1s;
+          right: 12px;
+          animation-delay: 1s;
         }
 
         .star-center-top {
-          top: -12px;
+          top: -8px;
           left: 50%;
           transform: translateX(-50%);
-          animation-delay: 0.7s;
+          animation-delay: 0.6s;
         }
 
         @keyframes starTwinkle {
@@ -211,8 +197,8 @@ export default function MainInvitationCard() {
           }
           100% {
             opacity: 1;
-            transform: scale(1.25) rotate(90deg);
-            filter: drop-shadow(0 0 8px #FFF7F0) drop-shadow(0 0 16px #E7C687);
+            transform: scale(1.2) rotate(90deg);
+            filter: drop-shadow(0 0 8px #FFF7F0) drop-shadow(0 0 15px #E7C687);
           }
         }
 
@@ -226,7 +212,7 @@ export default function MainInvitationCard() {
 
         .invitation-date-text {
           font-family: var(--font-serif-heading);
-          font-size: 1.55rem;
+          font-size: 1.45rem;
           font-weight: 700;
           letter-spacing: 0.04em;
           color: var(--color-warm-ivory);
@@ -234,27 +220,27 @@ export default function MainInvitationCard() {
 
         @media (min-width: 480px) {
           .invitation-date-text {
-            font-size: 1.85rem;
+            font-size: 1.8rem;
           }
         }
 
         .invitation-time-text {
           font-family: var(--font-elegant-serif);
           font-style: italic;
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           color: var(--color-light-gold);
           letter-spacing: 0.06em;
         }
 
         .card-flourish-divider {
-          width: 140px;
+          width: 120px;
           height: 1px;
           background: linear-gradient(90deg, transparent, var(--color-antique-gold), transparent);
-          margin: 0.9rem auto;
+          margin: 0.8rem auto;
         }
 
         .invitation-venue-block {
-          margin-top: 0.5rem;
+          margin-top: 0.4rem;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -262,16 +248,16 @@ export default function MainInvitationCard() {
 
         .venue-lead-label {
           font-family: var(--font-clean-body);
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           letter-spacing: 0.22em;
           text-transform: uppercase;
           color: rgba(255, 247, 240, 0.65);
-          margin-bottom: 0.3rem;
+          margin-bottom: 0.25rem;
         }
 
         .venue-name-bold {
           font-family: var(--font-serif-heading);
-          font-size: 1.35rem;
+          font-size: 1.3rem;
           font-weight: 600;
           color: var(--color-warm-ivory);
           letter-spacing: 0.03em;
@@ -279,7 +265,7 @@ export default function MainInvitationCard() {
 
         @media (min-width: 480px) {
           .venue-name-bold {
-            font-size: 1.55rem;
+            font-size: 1.5rem;
           }
         }
 
@@ -304,11 +290,11 @@ export default function MainInvitationCard() {
 
       <EngagementRings />
 
-      {/* Couple's Names with Twinkling & Heartbeat Effect */}
+      {/* Couple's Names: Perfectly Scaled on Mobile with Twinkling & Heartbeat */}
       <div className="couple-names-hero-container">
-        <Sparkles size={18} className="name-twinkle-star star-top-left" />
-        <Sparkles size={16} className="name-twinkle-star star-bottom-right" />
-        <Sparkles size={14} className="name-twinkle-star star-center-top" />
+        <Sparkles size={16} className="name-twinkle-star star-top-left" />
+        <Sparkles size={14} className="name-twinkle-star star-bottom-right" />
+        <Sparkles size={12} className="name-twinkle-star star-center-top" />
 
         <span className="couple-name-calligraphy">{bride.name}</span>
         <span className="couple-ampersand">&</span>
