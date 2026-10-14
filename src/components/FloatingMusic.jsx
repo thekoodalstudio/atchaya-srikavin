@@ -1,175 +1,101 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Music } from 'lucide-react';
+import { Volume2, VolumeX, Disc3 } from 'lucide-react';
 import { INVITATION_DATA } from '../data/invitation';
 
 /**
- * Floating Ambient Music Toggle
- * 
- * Capabilities:
- * 1. Supports external audio file if configured in invitation.js
- * 2. Features an internal Web Audio API synthesizer that generates a meditative,
- *    warm Indian classical Tanpura drone and Carnatic flute acoustic melody
- *    so music plays reliably without requiring external MP3 hosting!
- * 3. Never autoplays sound (strictly visitor opt-in).
+ * Floating Background Music Controller
+ * - Plays Rathinamo (rathinamo.mp3)
+ * - Volume set to 50% (0.5) by default
+ * - Autoplay attempted on load with global one-time interaction fallback
+ *   so music starts immediately upon the first touch/click/scroll!
  */
 export default function FloatingMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-  const synthRef = useRef(null);
-
-  const toggleMusic = () => {
-    if (isPlaying) {
-      stopMusic();
-    } else {
-      startMusic();
-    }
-  };
-
-  const startMusic = () => {
-    // 1. Try external audio if configured
-    if (INVITATION_DATA.audio.src && audioRef.current) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {
-          // If audio file fails, play ambient synthesizer
-          startAmbientSynth();
-          setIsPlaying(true);
-        });
-    } else {
-      // 2. Play gentle ambient Indian classical synthesizer
-      startAmbientSynth();
-      setIsPlaying(true);
-    }
-  };
-
-  const stopMusic = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    stopAmbientSynth();
-    setIsPlaying(false);
-  };
-
-  // Indian Classical Tanpura / Veena Harmonic Synth using Web Audio API
-  const startAmbientSynth = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-
-      const ctx = new AudioContext();
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0.001, ctx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 1.5);
-      masterGain.connect(ctx.destination);
-
-      // Root Sa, Pa, Sa octaves (C# / D# scale traditional drone)
-      const baseFreqs = [138.59, 207.65, 277.18, 415.30];
-      const oscillators = [];
-
-      baseFreqs.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const oscGain = ctx.createGain();
-
-        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-        // Slow pitch drift to simulate natural acoustic string vibration
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.frequency.setValueAtTime(0.2 + idx * 0.1, ctx.currentTime);
-        lfoGain.gain.setValueAtTime(1.2, ctx.currentTime);
-        lfo.connect(osc.frequency);
-        lfo.start();
-
-        oscGain.gain.setValueAtTime(0.04 / (idx + 1), ctx.currentTime);
-        osc.connect(oscGain);
-        oscGain.connect(masterGain);
-        osc.start();
-
-        oscillators.push(osc, lfo);
-      });
-
-      // Melodic gentle bell / flute chime intervals
-      let noteStep = 0;
-      // Mohanam / Bhoopali pentatonic scale notes (Sa, Ri, Ga, Pa, Dha)
-      const ragaNotes = [277.18, 311.13, 349.23, 415.30, 466.16, 554.37];
-      
-      const intervalId = setInterval(() => {
-        if (ctx.state === 'closed') return;
-        try {
-          const chimeOsc = ctx.createOscillator();
-          const chimeGain = ctx.createGain();
-          chimeOsc.type = 'sine';
-          
-          const targetFreq = ragaNotes[noteStep % ragaNotes.length];
-          noteStep++;
-
-          chimeOsc.frequency.setValueAtTime(targetFreq, ctx.currentTime);
-          chimeGain.gain.setValueAtTime(0.001, ctx.currentTime);
-          chimeGain.gain.exponentialRampToValueAtTime(0.035, ctx.currentTime + 0.3);
-          chimeGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.4);
-
-          chimeOsc.connect(chimeGain);
-          chimeGain.connect(masterGain);
-
-          chimeOsc.start();
-          chimeOsc.stop(ctx.currentTime + 2.5);
-        } catch {}
-      }, 2800);
-
-      synthRef.current = { ctx, oscillators, intervalId, masterGain };
-    } catch {}
-  };
-
-  const stopAmbientSynth = () => {
-    if (synthRef.current) {
-      try {
-        const { ctx, intervalId, masterGain } = synthRef.current;
-        clearInterval(intervalId);
-        if (masterGain && ctx) {
-          masterGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
-          setTimeout(() => {
-            try { ctx.close(); } catch {}
-          }, 600);
-        }
-      } catch {}
-      synthRef.current = null;
-    }
-  };
 
   useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // Set 50% volume strictly
+    audio.volume = INVITATION_DATA.audio.defaultVolume || 0.5;
+
+    // Attempt autoplay
+    const tryPlay = () => {
+      audio.play()
+        .then(() => {
+          setIsPlaying(true);
+          // Remove listener once successfully playing
+          window.removeEventListener('click', tryPlay);
+          window.removeEventListener('touchstart', tryPlay);
+          window.removeEventListener('scroll', tryPlay);
+        })
+        .catch(() => {
+          // Modern browsers block autoplay until first user gesture
+          setIsPlaying(false);
+        });
+    };
+
+    // Try immediately
+    tryPlay();
+
+    // Also attach one-time listener to guarantee play on first user tap/scroll
+    window.addEventListener('click', tryPlay, { once: true });
+    window.addEventListener('touchstart', tryPlay, { once: true });
+    window.addEventListener('scroll', tryPlay, { once: true });
+
     return () => {
-      stopAmbientSynth();
+      window.removeEventListener('click', tryPlay);
+      window.removeEventListener('touchstart', tryPlay);
+      window.removeEventListener('scroll', tryPlay);
     };
   }, []);
 
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      audio.volume = 0.5;
+      audio.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    }
+  };
+
   return (
     <>
-      {INVITATION_DATA.audio.src && (
-        <audio ref={audioRef} src={INVITATION_DATA.audio.src} loop preload="none" />
-      )}
+      <audio
+        ref={audioRef}
+        src={INVITATION_DATA.audio.src}
+        loop
+        preload="auto"
+      />
 
-      <div className="floating-music-container" aria-label="Audio Controls">
+      <div className="floating-music-container" aria-label="Music Controls">
         <style>{`
           .floating-music-container {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 100;
+            z-index: 1000;
           }
 
           .music-toggle-btn {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            background: rgba(38, 6, 10, 0.85);
-            border: 1px solid rgba(200, 161, 106, 0.5);
+            background: rgba(38, 6, 10, 0.88);
+            border: 1.5px solid rgba(200, 161, 106, 0.6);
             color: var(--color-light-gold);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 18px rgba(18, 2, 5, 0.65);
+            box-shadow: 0 4px 18px rgba(18, 2, 5, 0.75);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             position: relative;
@@ -178,42 +104,37 @@ export default function FloatingMusic() {
           .music-toggle-btn:hover {
             transform: scale(1.08);
             border-color: var(--color-warm-ivory);
-            box-shadow: 0 6px 22px rgba(200, 161, 106, 0.4);
+            box-shadow: 0 6px 25px rgba(200, 161, 106, 0.5);
           }
 
-          .music-toggle-btn.active {
-            border-color: var(--color-light-gold);
+          .music-toggle-btn.playing {
+            border-color: #E7C687;
             color: #fff;
-            animation: musicPulse 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px rgba(231, 198, 135, 0.65);
           }
 
-          @keyframes musicPulse {
-            0% { box-shadow: 0 0 10px rgba(200, 161, 106, 0.4); }
-            100% { box-shadow: 0 0 22px rgba(231, 198, 135, 0.8); }
+          .disc-icon-spin {
+            animation: discRotate 4.5s linear infinite;
           }
 
-          .soundwave-indicator {
-            position: absolute;
-            bottom: -18px;
-            font-family: var(--font-clean-body);
-            font-size: 0.65rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--color-light-gold);
-            white-space: nowrap;
-            pointer-events: none;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+          @keyframes discRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
           }
         `}</style>
 
         <button
           type="button"
-          className={`music-toggle-btn ${isPlaying ? 'active' : ''}`}
+          className={`music-toggle-btn ${isPlaying ? 'playing' : ''}`}
           onClick={toggleMusic}
           aria-label={isPlaying ? "Mute Background Music" : "Play Background Music"}
-          title={isPlaying ? "Mute Music" : "Play Gentle Instrumental"}
+          title={isPlaying ? "Mute Rathinamo (50% Volume)" : "Play Rathinamo Song"}
         >
-          {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+          {isPlaying ? (
+            <Disc3 size={24} className="disc-icon-spin" />
+          ) : (
+            <VolumeX size={20} />
+          )}
         </button>
       </div>
     </>

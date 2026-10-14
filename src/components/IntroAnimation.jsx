@@ -1,44 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { INVITATION_DATA } from '../data/invitation';
-import { Heart, Sparkles, ChevronRight } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 /**
- * Cinematic Loading & Opening Intro
- * Sequence:
- * 1. Deep burgundy textured background
- * 2. Fine ivory corner outlines unfurl
- * 3. Gold particles drift
- * 4. Center ornamental gold line draws
- * 5. "A Celebration of Love" fade-in
- * 6. "Atchaya & Srikavin" typography reveal
- * 7. "Open Invitation" call-to-action button
- * 8. Graceful "Skip Intro" option
+ * Cinematic Loading Page
+ * Features:
+ * - Animated elements: deep burgundy backdrop, unfurling ivory corner outlines,
+ *   drifting gold particles, center ornamental drawing line.
+ * - Automatically fades directly into the invitation after a few seconds
+ *   WITHOUT requiring an "Open Invitation" button.
  */
 export default function IntroAnimation({ onOpen, isOpened }) {
   const [step, setStep] = useState(1);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    // Stage 1 -> 2: Corner outlines & particles appear
-    const t1 = setTimeout(() => setStep(2), 500);
-    // Stage 2 -> 3: Ornamental line & welcome quote
-    const t2 = setTimeout(() => setStep(3), 1100);
-    // Stage 3 -> 4: Names reveal & Open button
-    const t3 = setTimeout(() => setStep(4), 1800);
+    // Stage 1: Floral corners & background texture
+    const t1 = setTimeout(() => setStep(2), 400);
+
+    // Stage 2: Center ornamental line & welcome quote
+    const t2 = setTimeout(() => setStep(3), 1000);
+
+    // Stage 3: Names reveal
+    const t3 = setTimeout(() => setStep(4), 1600);
+
+    // Stage 4: Automatic transition directly into the invitation after ~2.8s
+    const tAutoOpen = setTimeout(() => {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        onOpen();
+      }, 700);
+    }, 2800);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(tAutoOpen);
     };
-  }, []);
-
-  const handleOpen = () => {
-    setIsFadingOut(true);
-    setTimeout(() => {
-      onOpen();
-    }, 600);
-  };
+  }, [onOpen]);
 
   if (isOpened) return null;
 
@@ -47,7 +47,7 @@ export default function IntroAnimation({ onOpen, isOpened }) {
       className={`intro-screen-overlay ${isFadingOut ? 'fade-out' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Invitation Opening Intro"
+      aria-label="Welcome Loading"
     >
       <style>{`
         .intro-screen-overlay {
@@ -61,13 +61,13 @@ export default function IntroAnimation({ onOpen, isOpened }) {
           justify-content: center;
           padding: 1.5rem;
           color: var(--color-warm-ivory);
-          transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
           overflow: hidden;
         }
 
         .intro-screen-overlay.fade-out {
           opacity: 0;
-          transform: scale(1.04);
+          transform: scale(1.05);
           pointer-events: none;
         }
 
@@ -92,8 +92,8 @@ export default function IntroAnimation({ onOpen, isOpened }) {
 
         @media (min-width: 480px) {
           .intro-corner-decor {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
           }
         }
 
@@ -117,7 +117,6 @@ export default function IntroAnimation({ onOpen, isOpened }) {
           align-items: center;
         }
 
-        /* Tamil Sacred Monogram / Header */
         .intro-tamil-seal {
           font-family: var(--font-tamil);
           font-size: 0.95rem;
@@ -129,11 +128,10 @@ export default function IntroAnimation({ onOpen, isOpened }) {
           transition: all 0.8s ease;
         }
         .intro-tamil-seal.show {
-          opacity: 0.9;
+          opacity: 0.95;
           transform: translateY(0);
         }
 
-        /* Subtitle Welcome Quote */
         .intro-welcome-text {
           font-family: var(--font-elegant-serif);
           font-style: italic;
@@ -157,7 +155,6 @@ export default function IntroAnimation({ onOpen, isOpened }) {
           transform: translateY(0);
         }
 
-        /* Ornamental Center Line */
         .intro-ornament-line {
           height: 1px;
           width: 0%;
@@ -183,24 +180,23 @@ export default function IntroAnimation({ onOpen, isOpened }) {
           box-shadow: 0 0 10px #FFF7F0;
         }
 
-        /* Couple Names Typography */
         .intro-couple-names {
-          font-family: var(--font-serif-heading);
-          font-size: 2.2rem;
-          font-weight: 700;
-          line-height: 1.2;
-          letter-spacing: 0.05em;
+          font-family: 'Pinyon Script', 'Alex Brush', cursive;
+          font-size: 3.4rem;
+          font-weight: 400;
+          line-height: 1.1;
+          letter-spacing: 0.02em;
           color: var(--color-warm-ivory);
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.4rem;
           opacity: 0;
           transform: scale(0.92);
           transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(200, 161, 106, 0.3);
+          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(231, 198, 135, 0.45);
         }
 
         @media (min-width: 480px) {
           .intro-couple-names {
-            font-size: 3rem;
+            font-size: 4.4rem;
           }
         }
 
@@ -210,67 +206,27 @@ export default function IntroAnimation({ onOpen, isOpened }) {
         }
 
         .intro-ampersand {
-          font-family: var(--font-script-romantic);
-          font-size: 2.6rem;
-          font-weight: 400;
+          font-family: 'Cinzel Decorative', cursive;
+          font-size: 2.4rem;
           color: var(--color-light-gold);
           display: inline-block;
-          margin: 0 0.35rem;
-          vertical-align: middle;
+          margin: 0 0.4rem;
         }
 
-        .intro-event-badge {
-          font-family: var(--font-serif-heading);
-          font-size: 0.85rem;
-          letter-spacing: 0.25em;
+        .intro-loading-pulse {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-top: 1.8rem;
+          font-family: var(--font-clean-body);
+          font-size: 0.75rem;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: var(--color-light-gold);
-          margin-bottom: 2rem;
-          opacity: 0;
-          transform: translateY(8px);
-          transition: all 0.8s ease 0.2s;
+          opacity: 0.8;
+          animation: pulseGlow 1.8s ease-in-out infinite;
         }
 
-        .intro-event-badge.show {
-          opacity: 0.95;
-          transform: translateY(0);
-        }
-
-        /* Buttons Container */
-        .intro-actions {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem;
-          opacity: 0;
-          transform: translateY(16px);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-        }
-
-        .intro-actions.show {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .intro-skip-btn {
-          background: none;
-          border: none;
-          color: rgba(255, 247, 240, 0.55);
-          font-family: var(--font-clean-body);
-          font-size: 0.82rem;
-          letter-spacing: 0.08em;
-          cursor: pointer;
-          padding: 0.4rem 0.8rem;
-          text-decoration: underline;
-          text-underline-offset: 4px;
-          transition: color 0.2s ease;
-        }
-
-        .intro-skip-btn:hover {
-          color: var(--color-light-gold);
-        }
-
-        /* Studio Watermark in Intro */
         .intro-footer-studio {
           position: absolute;
           bottom: 20px;
@@ -282,7 +238,6 @@ export default function IntroAnimation({ onOpen, isOpened }) {
         }
       `}</style>
 
-      {/* Textured overlay */}
       <div className="intro-emboss-bg" />
 
       {/* Decorative ivory corner illustrations */}
@@ -299,58 +254,32 @@ export default function IntroAnimation({ onOpen, isOpened }) {
         <CornerDecorSvg />
       </div>
 
-      {/* Center Cinematic Card */}
       <div className="intro-center-box">
-        {/* Tamil Title */}
         <div className={`intro-tamil-seal ${step >= 2 ? 'show' : ''}`}>
           {INVITATION_DATA.tamilTitle}
         </div>
 
-        {/* Welcome Message */}
         <div className={`intro-welcome-text ${step >= 3 ? 'show' : ''}`}>
           "{INVITATION_DATA.quotes.welcome}"
         </div>
 
-        {/* Center Ornamental Drawing Line */}
         <div className={`intro-ornament-line ${step >= 3 ? 'show' : ''}`}>
           <div className="intro-ornament-line-center-gem" />
         </div>
 
-        {/* Couple's Names */}
         <h1 className={`intro-couple-names ${step >= 4 ? 'show' : ''}`}>
           <span>{INVITATION_DATA.bride.name}</span>
           <span className="intro-ampersand">&</span>
           <span>{INVITATION_DATA.groom.name}</span>
         </h1>
 
-        <div className={`intro-event-badge ${step >= 4 ? 'show' : ''}`}>
-          {INVITATION_DATA.occasion}
-        </div>
-
-        {/* Action Buttons */}
-        <div className={`intro-actions ${step >= 4 ? 'show' : ''}`}>
-          <button
-            type="button"
-            className="btn-gold-primary"
-            onClick={handleOpen}
-            aria-label="Open Invitation"
-          >
-            <span>Open Invitation</span>
-            <ChevronRight size={18} />
-          </button>
-
-          <button
-            type="button"
-            className="intro-skip-btn"
-            onClick={handleOpen}
-            aria-label="Skip Intro"
-          >
-            Skip Intro
-          </button>
+        <div className="intro-loading-pulse">
+          <Sparkles size={14} />
+          <span>Opening Your Invitation</span>
+          <Sparkles size={14} />
         </div>
       </div>
 
-      {/* Studio Brand watermark */}
       <div className="intro-footer-studio">
         {INVITATION_DATA.branding.tagline}
       </div>

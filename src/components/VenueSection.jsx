@@ -1,19 +1,20 @@
 import React from 'react';
 import { INVITATION_DATA } from '../data/invitation';
-import { MapPin, Navigation, ExternalLink, QrCode } from 'lucide-react';
+import { MapPin, Navigation, ExternalLink, QrCode, Phone, MessageCircle } from 'lucide-react';
 
 /**
- * Venue Information Section
+ * Venue & Contact Information Section
  * Displays:
  * - "Lakshmi Mini Hall, Thuraiyur"
- * - "View Location" button opening Google Maps search
- * - Stylized ornamental gold frame with QR Code scanner
+ * - Exact Google Maps navigation: https://maps.app.goo.gl/eQ2WB8CLyjZ1bj79A?g_st=ac
+ * - Stylized QR code scanner
+ * - Contact & Helpline: 95143 38585 with direct Call and WhatsApp quick actions
  */
 export default function VenueSection() {
-  const { venue } = INVITATION_DATA;
+  const { venue, contact } = INVITATION_DATA;
 
   return (
-    <section className="venue-section-wrapper" aria-label="Event Venue">
+    <section className="venue-section-wrapper" aria-label="Event Venue and Contact">
       <style>{`
         .venue-section-wrapper {
           width: 100%;
@@ -22,6 +23,7 @@ export default function VenueSection() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 1.5rem;
         }
 
         .venue-card {
@@ -94,7 +96,6 @@ export default function VenueSection() {
           margin-bottom: 1.4rem;
         }
 
-        /* QR Code Container styled with gold accents */
         .venue-qr-container {
           background: rgba(255, 247, 240, 0.96);
           padding: 12px;
@@ -133,8 +134,47 @@ export default function VenueSection() {
           justify-content: center;
           gap: 1rem;
         }
+
+        /* Contact & Helpline Card */
+        .contact-card {
+          width: 100%;
+          padding: 1.8rem 1.25rem;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: rgba(53, 9, 15, 0.7);
+          border: 1px solid rgba(200, 161, 106, 0.35);
+          border-radius: 20px;
+        }
+
+        .contact-title {
+          font-family: var(--font-serif-heading);
+          font-size: 1.15rem;
+          font-weight: 600;
+          color: var(--color-warm-ivory);
+          letter-spacing: 0.06em;
+          margin-bottom: 0.2rem;
+        }
+
+        .contact-number-display {
+          font-family: var(--font-clean-body);
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: var(--color-light-gold);
+          letter-spacing: 0.08em;
+          margin-bottom: 1.1rem;
+        }
+
+        .contact-buttons-group {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.85rem;
+        }
       `}</style>
 
+      {/* 1. Venue & Map Card */}
       <div className="royal-card venue-card">
         <div className="venue-ornamental-border" />
 
@@ -146,32 +186,26 @@ export default function VenueSection() {
         <h3 className="venue-name">{venue.name}</h3>
         <p className="venue-city">{venue.city}</p>
 
-        {/* QR Code as shown in the reference invitation */}
+        {/* QR Code linking directly to exact Google Maps URL */}
         <a
           href={venue.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="venue-qr-container"
-          title="Click or scan to open Google Maps"
-          aria-label="Scan QR Code for venue location on Google Maps"
+          title="Click to open Google Maps navigation"
+          aria-label="Scan or tap QR code to open exact venue location on Google Maps"
         >
-          {/* Crisp SVG QR code representation */}
           <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
-            {/* Background */}
             <rect width="110" height="110" fill="#FFF7F0" />
-            {/* Top-Left Position Detection Marker */}
             <rect x="10" y="10" width="28" height="28" rx="4" stroke="#26060A" strokeWidth="4" />
             <rect x="18" y="18" width="12" height="12" fill="#26060A" />
 
-            {/* Top-Right Position Detection Marker */}
             <rect x="72" y="10" width="28" height="28" rx="4" stroke="#26060A" strokeWidth="4" />
             <rect x="80" y="18" width="12" height="12" fill="#26060A" />
 
-            {/* Bottom-Left Position Detection Marker */}
             <rect x="10" y="72" width="28" height="28" rx="4" stroke="#26060A" strokeWidth="4" />
             <rect x="18" y="80" width="12" height="12" fill="#26060A" />
 
-            {/* Simulated Data Pattern Matrix */}
             <g fill="#26060A">
               <rect x="44" y="12" width="6" height="6" />
               <rect x="56" y="12" width="6" height="6" />
@@ -217,6 +251,34 @@ export default function VenueSection() {
             <Navigation size={18} />
             <span>View Location</span>
             <ExternalLink size={15} style={{ opacity: 0.7 }} />
+          </a>
+        </div>
+      </div>
+
+      {/* 2. Contact & Helpline Card */}
+      <div className="contact-card">
+        <h4 className="contact-title">For Assistance & Directions</h4>
+        <div className="contact-number-display">{contact.displayPhone}</div>
+
+        <div className="contact-buttons-group">
+          <a
+            href={contact.callLink}
+            className="btn-gold-secondary"
+            aria-label="Call Mobile Number"
+          >
+            <Phone size={16} />
+            <span>Call</span>
+          </a>
+
+          <a
+            href={contact.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold-secondary"
+            aria-label="Chat on WhatsApp"
+          >
+            <MessageCircle size={16} />
+            <span>WhatsApp</span>
           </a>
         </div>
       </div>

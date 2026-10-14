@@ -36,12 +36,6 @@ export default function App() {
 
       {/* 5. Main Invitation Container (Chapters) */}
       <main className="invitation-container" id="main-content">
-        {/* Subtle Top Blessing Monogram */}
-        <div className="top-sacred-blessing" aria-hidden="true">
-          <span className="blessing-om font-tamil">ஓம் ஸ்ரீ விநாயகர் துணை</span>
-          <div className="blessing-dot" />
-        </div>
-
         {/* Section 1: Main Invitation Card & Interlocking Rings */}
         <section id="invitation-hero" className="invitation-section-fade">
           <MainInvitationCard />
