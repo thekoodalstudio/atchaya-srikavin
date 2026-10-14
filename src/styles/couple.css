@@ -1,0 +1,351 @@
+/* Styles and Keyframe Timelines for the Signature Couple Animation */
+
+.couple-stage-container {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: 2rem auto;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 60%, rgba(81, 16, 27, 0.75) 0%, rgba(38, 6, 10, 0.95) 100%);
+  border: 1px solid rgba(200, 161, 106, 0.4);
+  box-shadow: 0 15px 45px rgba(18, 2, 5, 0.8), 0 0 1px 1px rgba(231, 198, 135, 0.2) inset;
+  padding: 2rem 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .couple-stage-container {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Background Arch & Kolam Halo */
+.couple-halo {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 161, 106, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.couple-arch-svg {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 440px;
+  height: auto;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Character Animation Stage */
+.couple-canvas {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 2;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 480px) {
+  .couple-canvas {
+    height: 320px;
+  }
+}
+
+/* Characters base placement */
+.character-figure {
+  position: absolute;
+  bottom: 12px;
+  width: 150px;
+  height: 270px;
+  transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+@media (min-width: 480px) {
+  .character-figure {
+    width: 170px;
+    height: 300px;
+  }
+}
+
+/* Male Character */
+.male-character {
+  left: 50%;
+  transform: translateX(-180px); /* Initial scene 1 entrance */
+}
+
+/* Female Character */
+.female-character {
+  left: 50%;
+  transform: translateX(30px); /* Initial scene 1 entrance */
+}
+
+/* Scene States Driven by React State (scene: 1 to 6) */
+
+/* Scene 1: Entering stage */
+.couple-canvas[data-scene="1"] .male-character {
+  transform: translateX(-190px);
+  animation: maleEnter 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+.couple-canvas[data-scene="1"] .female-character {
+  transform: translateX(40px);
+  animation: femaleEnter 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+@keyframes maleEnter {
+  0% {
+    transform: translateX(-240px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-120px);
+    opacity: 1;
+  }
+}
+
+@keyframes femaleEnter {
+  0% {
+    transform: translateX(90px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-30px);
+    opacity: 1;
+  }
+}
+
+/* Scene 2 & Beyond: Meeting in center */
+.couple-canvas[data-scene="2"] .male-character,
+.couple-canvas[data-scene="3"] .male-character,
+.couple-canvas[data-scene="4"] .male-character,
+.couple-canvas[data-scene="5"] .male-character,
+.couple-canvas[data-scene="6"] .male-character {
+  transform: translateX(-95px);
+  opacity: 1;
+}
+
+.couple-canvas[data-scene="2"] .female-character,
+.couple-canvas[data-scene="3"] .female-character,
+.couple-canvas[data-scene="4"] .female-character,
+.couple-canvas[data-scene="5"] .female-character,
+.couple-canvas[data-scene="6"] .female-character {
+  transform: translateX(-55px);
+  opacity: 1;
+}
+
+/* Slight upper-body turn */
+.couple-canvas[data-scene="2"] .male-torso,
+.couple-canvas[data-scene="3"] .male-torso,
+.couple-canvas[data-scene="4"] .male-torso,
+.couple-canvas[data-scene="5"] .male-torso,
+.couple-canvas[data-scene="6"] .male-torso {
+  transform: rotate(2deg);
+}
+
+.couple-canvas[data-scene="2"] .female-torso,
+.couple-canvas[data-scene="3"] .female-torso,
+.couple-canvas[data-scene="4"] .female-torso,
+.couple-canvas[data-scene="5"] .female-torso,
+.couple-canvas[data-scene="6"] .female-torso {
+  transform: rotate(-2deg);
+}
+
+/* Arms reaching and joining hands in Scene 3+ */
+.male-arm {
+  transform-origin: 90px 88px;
+  transition: transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.female-arm {
+  transform-origin: 55px 94px;
+  transition: transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.couple-canvas[data-scene="1"] .male-arm {
+  transform: rotate(0deg);
+}
+.couple-canvas[data-scene="1"] .female-arm {
+  transform: rotate(0deg);
+}
+
+.couple-canvas[data-scene="2"] .male-arm {
+  transform: rotate(18deg);
+}
+.couple-canvas[data-scene="2"] .female-arm {
+  transform: rotate(-18deg);
+}
+
+/* Hands Joined */
+.couple-canvas[data-scene="3"] .male-arm,
+.couple-canvas[data-scene="4"] .male-arm,
+.couple-canvas[data-scene="5"] .male-arm,
+.couple-canvas[data-scene="6"] .male-arm {
+  transform: rotate(34deg);
+}
+
+.couple-canvas[data-scene="3"] .female-arm,
+.couple-canvas[data-scene="4"] .female-arm,
+.couple-canvas[data-scene="5"] .female-arm,
+.couple-canvas[data-scene="6"] .female-arm {
+  transform: rotate(-34deg);
+}
+
+/* Subtle breathing in final pose */
+.couple-canvas[data-scene="6"] .male-character {
+  animation: gentleSway 5s ease-in-out infinite alternate;
+}
+
+.couple-canvas[data-scene="6"] .female-character {
+  animation: gentleSway 5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes gentleSway {
+  0% { transform: translateX(-95px) translateY(0); }
+  100% { transform: translateX(-95px) translateY(-3px); }
+}
+
+/* Ring Ceremony Spot / Illumination */
+.ring-ceremony-halo {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(231, 198, 135, 0.7) 0%, rgba(200, 161, 106, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.couple-canvas[data-scene="4"] .ring-ceremony-halo,
+.couple-canvas[data-scene="5"] .ring-ceremony-halo,
+.couple-canvas[data-scene="6"] .ring-ceremony-halo {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Floating Gold Ring during Ceremony */
+.ceremony-ring-element {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 6;
+  pointer-events: none;
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.couple-canvas[data-scene="4"] .ceremony-ring-element {
+  opacity: 1;
+  transform: translate(-50%, 0px) scale(1) rotate(12deg);
+  animation: ringSparkle 1.8s ease-in-out infinite alternate;
+}
+
+.couple-canvas[data-scene="5"] .ceremony-ring-element,
+.couple-canvas[data-scene="6"] .ceremony-ring-element {
+  opacity: 1;
+  transform: translate(-50%, 15px) scale(0.9) rotate(0deg);
+}
+
+@keyframes ringSparkle {
+  0% { filter: drop-shadow(0 0 5px #E7C687); }
+  100% { filter: drop-shadow(0 0 16px #FFF7F0) drop-shadow(0 0 25px #C8A16A); }
+}
+
+/* Couple Status Text Badge */
+.couple-step-badge {
+  font-family: var(--font-serif-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-light-gold);
+  background: rgba(38, 6, 10, 0.8);
+  border: 1px solid rgba(200, 161, 106, 0.35);
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 3;
+}
+
+/* Couple Names & Together Line */
+.couple-celebration-info {
+  text-align: center;
+  z-index: 3;
+  margin-top: 0.5rem;
+  min-height: 85px;
+}
+
+.couple-celebration-names {
+  font-family: var(--font-serif-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+  color: var(--color-warm-ivory);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 480px) {
+  .couple-celebration-names {
+    font-size: 2rem;
+  }
+}
+
+.couple-celebration-names .heart-icon {
+  color: #E7C687;
+  display: inline-block;
+  margin: 0 0.4rem;
+  animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+.couple-forever-text {
+  font-family: var(--font-elegant-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-light-gold);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.couple-canvas[data-scene="5"] ~ .couple-celebration-info .couple-forever-text,
+.couple-canvas[data-scene="6"] ~ .couple-celebration-info .couple-forever-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Replay Button */
+.couple-replay-btn {
+  margin-top: 1rem;
+  z-index: 3;
+}

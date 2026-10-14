@@ -1,0 +1,251 @@
+:root {
+  --color-burgundy: #35090F;
+  --color-dark-wine: #26060A;
+  --color-maroon: #51101B;
+  --color-antique-gold: #C8A16A;
+  --color-light-gold: #E7C687;
+  --color-warm-ivory: #FFF7F0;
+  --color-muted-rose: #D9A0A0;
+  --color-deep-shadow: rgba(18, 2, 5, 0.75);
+
+  --font-serif-heading: 'Cinzel', 'Playfair Display', serif;
+  --font-serif-ornate: 'Cinzel Decorative', serif;
+  --font-script-romantic: 'Great Vibes', 'Alex Brush', cursive;
+  --font-elegant-serif: 'Cormorant Garamond', 'Playfair Display', serif;
+  --font-clean-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-tamil: 'Noto Serif Tamil', serif;
+
+  --gold-glow: 0 0 20px rgba(200, 161, 106, 0.45), 0 0 40px rgba(231, 198, 135, 0.2);
+  --ivory-glow: 0 0 15px rgba(255, 247, 240, 0.35);
+  --panel-bg: rgba(53, 9, 15, 0.65);
+  --panel-border: 1px solid rgba(200, 161, 106, 0.3);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--color-dark-wine);
+  color: var(--color-warm-ivory);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-clean-body);
+  background-color: var(--color-dark-wine);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Master Embossed Floral Background Texture */
+.embossed-bg-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 50% 20%, #460c15 0%, #2e070c 50%, #1c0307 100%);
+  overflow: hidden;
+}
+
+/* Floral embossed damask pattern overlay */
+.embossed-floral-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(255, 247, 240, 0.12) 1px, transparent 1px),
+    radial-gradient(rgba(200, 161, 106, 0.08) 1.5px, transparent 1.5px);
+  background-size: 32px 32px, 64px 64px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Subtle embossed petal relief mesh */
+.embossed-texture-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Vignette overlay */
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 35%, rgba(18, 2, 5, 0.85) 100%);
+  pointer-events: none;
+}
+
+/* Typography helper classes */
+.font-heading {
+  font-family: var(--font-serif-heading);
+}
+
+.font-script {
+  font-family: var(--font-script-romantic);
+}
+
+.font-tamil {
+  font-family: var(--font-tamil);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF0D6 0%, #E7C687 40%, #C8A16A 75%, #A87D43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.text-ivory {
+  color: var(--color-warm-ivory);
+}
+
+.text-antique-gold {
+  color: var(--color-antique-gold);
+}
+
+.text-muted-rose {
+  color: var(--color-muted-rose);
+}
+
+/* Premium Buttons */
+.btn-gold-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  font-family: var(--font-serif-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-dark-wine);
+  background: linear-gradient(135deg, #FFF7F0 0%, #E7C687 45%, #C8A16A 85%, #B38642 100%);
+  border: 1px solid rgba(255, 247, 240, 0.7);
+  border-radius: 9999px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(200, 161, 106, 0.35), 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.btn-gold-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: left 0.7s ease;
+}
+
+.btn-gold-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(200, 161, 106, 0.55), 0 0 3px rgba(255, 255, 255, 0.8) inset;
+}
+
+.btn-gold-primary:hover::before {
+  left: 100%;
+}
+
+.btn-gold-primary:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-gold-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-serif-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-warm-ivory);
+  background: rgba(53, 9, 15, 0.7);
+  border: 1px solid rgba(200, 161, 106, 0.5);
+  border-radius: 9999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-gold-secondary:hover {
+  background: rgba(200, 161, 106, 0.2);
+  border-color: var(--color-light-gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(200, 161, 106, 0.25);
+}
+
+/* Glass Cards */
+.royal-card {
+  background: linear-gradient(135deg, rgba(65, 12, 19, 0.75) 0%, rgba(38, 6, 10, 0.85) 100%);
+  border: 1px solid rgba(200, 161, 106, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(18, 2, 5, 0.65), 0 0 1px 1px rgba(200, 161, 106, 0.15) inset;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.royal-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-light-gold), transparent);
+}
+
+/* Responsive Containers */
+.invitation-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .invitation-container {
+    padding: 4rem 2rem 6rem 2rem;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .petal, .jasmine, .gold-particle {
+    display: none !important;
+  }
+}

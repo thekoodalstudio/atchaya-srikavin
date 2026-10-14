@@ -1,0 +1,200 @@
+/* Keyframes & Particle Animations for Engagement Invitation */
+
+/* Subtle Rose Petal Fall & Gentle Sway */
+@keyframes fall-petal {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 40px), 110vh, 0) rotate(var(--rot-deg, 360deg)) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Drifting White Jasmine (Malli) Petal */
+@keyframes jasmine-float {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(15deg) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, -50px), 105vh, 0) rotate(var(--rot-deg, -240deg)) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* Floating Gold Particle Twinkle */
+@keyframes gold-twinkle {
+  0%, 100% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 6px #E7C687);
+  }
+}
+
+/* Line draw animation */
+@keyframes lineDraw {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/* Golden Pulse Glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(200, 161, 106, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(231, 198, 135, 0.8));
+  }
+}
+
+/* Floating ambient movement */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Shimmer gleam sweep */
+@keyframes shimmerSweep {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Text Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Intro Curtain Opening */
+@keyframes curtainFadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  99% {
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Botanical Corner Unfurl */
+@keyframes cornerReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Ring Entry Animations */
+@keyframes ringSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px) rotate(-35deg) scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(8px) rotate(-10deg) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-15deg) scale(1);
+  }
+}
+
+@keyframes ringSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px) rotate(35deg) scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(-8px) rotate(10deg) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(15deg) scale(1);
+  }
+}
+
+@keyframes ringSparkleBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8) rotate(180deg);
+  }
+}
+
+/* Utility animation classes */
+.anim-fade-in-up {
+  animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-delay-1 { animation-delay: 0.15s; }
+.anim-delay-2 { animation-delay: 0.3s; }
+.anim-delay-3 { animation-delay: 0.45s; }
+.anim-delay-4 { animation-delay: 0.6s; }
+.anim-delay-5 { animation-delay: 0.8s; }
+
+.anim-float {
+  animation: floatGentle 4.5s ease-in-out infinite;
+}
+
+.anim-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
